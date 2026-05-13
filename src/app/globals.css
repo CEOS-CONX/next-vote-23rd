@@ -1,6 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
+  --breakpoint-mobile: (max-width: 768px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
