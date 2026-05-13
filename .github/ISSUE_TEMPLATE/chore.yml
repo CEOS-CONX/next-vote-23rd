@@ -1,0 +1,40 @@
+name: 🧹 Chore
+description: 빌드, 설정, 의존성, 저장소 운영 관련 작업
+title: "chore: "
+labels: ["type: chore", "triage"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: 작업 종류
+      options:
+        - 의존성 업데이트
+        - 빌드 / 배포 설정
+        - CI / GitHub Actions
+        - 린터 / 포매터 설정
+        - 저장소 메타 (.github 등)
+        - 기타
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 무슨 작업인가요?
+      description: 어떤 변경이 필요한지 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: 왜 필요한가요?
+      description: 이 작업이 필요한 배경이나 이유를 적어주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 추가 정보
+      description: 참고 링크, 영향 범위 등
