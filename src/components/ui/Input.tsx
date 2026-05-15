@@ -11,7 +11,7 @@ export default function Input({ label, error, className = '', ...props }: InputP
   if (label) {
     return (
       <div className="flex items-center justify-between">
-        <span className="shrink-0 text-subhead-bold text-black">{label}</span>
+        <span className="max-w-[68px] text-subhead-bold text-black md:max-w-none">{label}</span>
         <div className="w-64 md:w-[368px]">
           <div className="border-b border-black p-3">
             <input
