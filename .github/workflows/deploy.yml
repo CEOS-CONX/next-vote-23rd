@@ -34,7 +34,7 @@ jobs:
         with:
           source-directory: 'output'
           destination-github-username: Yeobi00
-          destination-repository-name: ceos.week7.next-vote-23rd
+          destination-repository-name: next-vote-23rd
           user-name: GitHub Actions
           user-email: ${{ secrets.EMAIL }}
           commit-message: 'Deploy from build: ${{ github.sha }}'
