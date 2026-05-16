@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="pt-6 md:mx-auto md:w-[550px] md:pt-40">
+    <div className="mx-auto w-[550px] pt-40 max-md:mx-0 max-md:w-auto max-md:pt-6">
       <h1 className="font-suite text-headline5 text-black">LOGIN</h1>
       <div className="mt-3 border-b border-black" />
 
@@ -49,12 +49,12 @@ export default function LoginPage() {
         </div>
 
         <div
-          className="mt-2 text-center text-body1 text-placeholder underline"
+          className="text-body1 text-placeholder mt-2 text-center underline"
           style={{ fontFeatureSettings: "'case' on" }}
         >
-          <p className="md:hidden">아직 계정이 없나요?</p>
+          <p className="hidden max-md:block">아직 계정이 없나요?</p>
           <Link href="/signup">
-            <span className="hidden md:inline">아직 계정이 없나요? </span>
+            <span className="inline max-md:hidden">아직 계정이 없나요? </span>
             회원가입하러 가기
           </Link>
         </div>

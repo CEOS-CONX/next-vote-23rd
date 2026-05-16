@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className="h-full antialiased">
-      <body className="mx-auto flex min-h-full max-w-97.5 flex-col bg-linear-to-b from-background to-gradient-end md:max-w-none">
+      <body className="from-background to-gradient-end mx-auto flex min-h-full max-w-none flex-col bg-linear-to-b max-md:max-w-97.5">
         <Header />
         <Navigation />
         <main className="flex-1 px-5">{children}</main>
