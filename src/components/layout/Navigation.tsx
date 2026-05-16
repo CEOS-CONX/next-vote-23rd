@@ -19,13 +19,13 @@ export default function Navigation() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 mx-auto flex max-w-97.5 justify-end md:hidden">
+    <div className="fixed inset-0 z-50 mx-auto hidden max-w-97.5 justify-end max-md:flex">
       <div className="absolute inset-0" onClick={close} />
-      <nav className="relative flex h-full w-[279px] flex-col bg-nav-bg">
+      <nav className="bg-nav-bg relative flex h-full w-[279px] flex-col">
         {/* Close Button */}
         <button
           onClick={close}
-          className="absolute right-5 top-[33px] flex h-9 w-9 cursor-pointer items-center justify-center"
+          className="absolute top-[33px] right-5 flex h-9 w-9 cursor-pointer items-center justify-center"
           aria-label="메뉴 닫기"
         >
           <IconExit className="h-[23px] w-[23px]" />
@@ -38,7 +38,7 @@ export default function Navigation() {
               <Link
                 href={item.href}
                 onClick={close}
-                className={`block font-suite text-headline3 text-right ${
+                className={`font-suite text-headline3 block text-right ${
                   pathname.startsWith(item.href) ? 'text-nav-accent' : 'text-white'
                 }`}
               >

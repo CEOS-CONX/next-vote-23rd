@@ -40,20 +40,18 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="pt-6 md:mx-auto md:w-[550px] md:pt-40">
+    <div className="mx-auto w-[550px] pt-40 max-md:mx-0 max-md:w-auto max-md:pt-6">
       <h1 className="font-suite text-headline5 text-black">SIGNUP</h1>
       <div className="mt-3 border-b border-black" />
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-[30px]">
         {/* Part Toggle */}
-        <div className="flex h-[51px] overflow-hidden rounded-xl border border-foreground">
+        <div className="border-foreground flex h-[51px] overflow-hidden rounded-xl border">
           <button
             type="button"
             onClick={() => setPart('FRONT-END')}
-            className={`flex-1 text-center text-subhead ${
-              part === 'FRONT-END'
-                ? 'bg-btn-dark text-white'
-                : 'bg-white text-foreground'
+            className={`text-subhead flex-1 text-center ${
+              part === 'FRONT-END' ? 'bg-btn-dark text-white' : 'text-foreground bg-white'
             }`}
           >
             FRONT - END
@@ -61,10 +59,8 @@ export default function SignupPage() {
           <button
             type="button"
             onClick={() => setPart('BACK-END')}
-            className={`flex-1 text-center text-subhead ${
-              part === 'BACK-END'
-                ? 'bg-btn-dark text-white'
-                : 'bg-white text-foreground'
+            className={`text-subhead flex-1 text-center ${
+              part === 'BACK-END' ? 'bg-btn-dark text-white' : 'text-foreground bg-white'
             }`}
           >
             BACK - END

@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <>
       {/* Mobile */}
-      <header className="flex items-start justify-between px-5 pt-8 pb-4 md:hidden">
+      <header className="hidden items-start justify-between px-5 pt-8 pb-4 max-md:flex">
         <div className="text-body2 text-foreground" style={{ fontFeatureSettings: "'case' on" }}>
           <p>CEOS</p>
           <p>AWARD</p>
@@ -19,14 +19,14 @@ export default function Header() {
           className="flex cursor-pointer flex-col gap-[4.2px] p-1"
           aria-label="메뉴 열기"
         >
-          <span className="block h-[4.2px] w-7 bg-foreground" />
-          <span className="block h-[4.2px] w-7 bg-foreground" />
-          <span className="block h-[4.2px] w-7 bg-foreground" />
+          <span className="bg-foreground block h-[4.2px] w-7" />
+          <span className="bg-foreground block h-[4.2px] w-7" />
+          <span className="bg-foreground block h-[4.2px] w-7" />
         </button>
       </header>
 
       {/* Desktop */}
-      <div className="hidden md:block">
+      <div className="block max-md:hidden">
         <DesktopHeader />
       </div>
     </>
