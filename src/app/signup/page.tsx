@@ -40,13 +40,13 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="mx-auto w-[550px] pt-40 max-md:mx-0 max-md:w-auto max-md:pt-6">
+    <div className="mx-auto w-137.5 pt-40 max-md:mx-0 max-md:w-auto max-md:pt-6">
       <h1 className="font-suite text-headline5 text-black">SIGNUP</h1>
       <div className="mt-3 border-b border-black" />
 
-      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-[30px]">
+      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-7.5">
         {/* Part Toggle */}
-        <div className="border-foreground flex h-[51px] overflow-hidden rounded-xl border">
+        <div className="border-foreground flex h-12.75 overflow-hidden rounded-xl border">
           <button
             type="button"
             onClick={() => setPart('FRONT-END')}
