@@ -11,8 +11,8 @@ export default function Input({ label, error, className = '', ...props }: InputP
   if (label) {
     return (
       <div className="flex items-center justify-between">
-        <span className="text-subhead-bold max-w-none text-black max-md:max-w-[68px]">{label}</span>
-        <div className="w-[368px] max-md:w-64">
+        <span className="text-subhead-bold max-w-none text-black max-md:max-w-17">{label}</span>
+        <div className="w-92 max-md:w-64">
           <div className="border-b border-black p-3">
             <input
               className={`text-body1-med text-foreground placeholder:text-placeholder w-full outline-none ${className}`}
@@ -21,7 +21,7 @@ export default function Input({ label, error, className = '', ...props }: InputP
             />
           </div>
           {error && (
-            <p className="text-body2 text-error mt-1" style={{ fontFeatureSettings: "'case' on" }}>
+            <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
               {error}
             </p>
           )}
@@ -39,7 +39,7 @@ export default function Input({ label, error, className = '', ...props }: InputP
         />
       </div>
       {error && (
-        <p className="text-body2 text-error mt-1" style={{ fontFeatureSettings: "'case' on" }}>
+        <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
           {error}
         </p>
       )}
