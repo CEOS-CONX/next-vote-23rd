@@ -14,22 +14,19 @@ export default function DesktopHeader() {
   const pathname = usePathname();
 
   return (
-    <header
-      className="mx-[62px] mt-9 flex h-9"
-      style={{ fontFeatureSettings: "'case' on" }}
-    >
+    <header className="mx-15.5 mt-9 flex h-9" style={{ fontFeatureSettings: "'case' on" }}>
       {/* Logo */}
-      <div className="flex flex-1 items-start border-4 border-foreground px-[26px] py-1">
-        <span className="text-body2 text-foreground">2024 CEOS AWARD </span>
+      <div className="border-foreground flex flex-1 items-start border-4 px-6.5 py-1">
+        <span className="text-body2 text-foreground">2026 CEOS AWARD </span>
       </div>
 
       {/* Navigation */}
-      <div className="flex flex-1 items-start bg-foreground">
+      <div className="bg-foreground flex flex-1 items-start">
         {menuItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-1 justify-center py-2 text-body2 ${
+            className={`text-body2 flex flex-1 justify-center py-2 ${
               pathname.startsWith(item.href) ? 'text-nav-accent' : 'text-nav-text'
             }`}
           >

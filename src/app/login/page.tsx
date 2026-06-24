@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="mx-auto w-137.5 pt-40 max-md:mx-0 max-md:w-auto max-md:pt-6">
+    <div className="mx-auto w-137.5 pt-40 max-md:mx-0 max-md:w-auto max-md:pt-7.5">
       <h1 className="font-suite text-headline5 text-black">LOGIN</h1>
       <div className="mt-3.5 border-b border-black" />
 
@@ -37,7 +37,7 @@ export default function LoginPage() {
         />
         <div className={errors.id ? 'h-9.5' : 'h-4.75'}>
           {errors.id && (
-            <div className="flex h-9.5 items-center py-2">
+            <div className="flex h-9.5 items-center py-2 max-md:pl-2">
               <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
                 {errors.id}
               </p>
@@ -53,7 +53,7 @@ export default function LoginPage() {
 
         <div className={errors.password ? 'h-13.75' : 'h-9'}>
           {errors.password && (
-            <div className="flex h-9.5 items-center py-2">
+            <div className="flex h-9.5 items-center py-2 max-md:pl-2">
               <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
                 {errors.password}
               </p>

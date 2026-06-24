@@ -34,7 +34,7 @@ export default function Dropdown({ label, placeholder, options, value, onChange 
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="border-foreground flex w-full items-center justify-between border-b p-3"
+          className="border-foreground flex w-full items-center justify-between border-b px-3 py-3 max-md:px-1.5"
           style={{ fontFeatureSettings: "'case' on" }}
         >
           <span className={`text-body1-med ${value ? 'text-foreground' : 'text-placeholder'}`}>

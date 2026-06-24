@@ -42,7 +42,7 @@ export default function SignupPage() {
   return (
     <>
       <div className="fixed inset-0 z-[-1] bg-white" />
-      <div className="mx-auto mt-50.25 mb-66.5 w-137.5 max-md:mx-0 max-md:w-auto max-md:pt-6">
+      <div className="mx-auto mt-50.25 mb-66.5 w-137.5 max-md:mx-0 max-md:mt-0 max-md:mb-28 max-md:w-auto max-md:pt-7.5">
         <h1 className="font-suite text-headline5 text-black">SIGNUP</h1>
         <div className="mt-3.5 border-b border-black" />
 
@@ -88,7 +88,7 @@ export default function SignupPage() {
           </div>
 
           {/* Form Fields */}
-          <div className="mt-7.5 flex flex-col">
+          <div className="mt-7.5 flex flex-col max-md:mt-0">
             <Input
               label="아이디"
               placeholder="아이디를 입력해 주세요"
@@ -102,9 +102,9 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <div className={errors.email ? 'h-12.25' : 'h-7.5'}>
+            <div className={errors.email ? 'h-12 max-md:h-7.5' : 'h-7.5'}>
               {errors.email && (
-                <div className="mb-3 ml-auto flex h-9 w-92 items-center px-1 py-2 max-md:w-64">
+                <div className="mb-3 ml-auto flex h-9 w-92 items-center px-1 pt-2 pb-2 max-md:mb-0 max-md:w-64 max-md:pb-0.5">
                   <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
                     {errors.email}
                   </p>
@@ -126,7 +126,7 @@ export default function SignupPage() {
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
-            <div className={errors.passwordConfirm ? 'h-9' : 'h-3.75'}>
+            <div className={errors.passwordConfirm ? 'h-9' : 'h-3.75 max-md:h-4.5'}>
               {errors.passwordConfirm && (
                 <div className="ml-auto flex w-92 items-center px-1 py-2 max-md:w-64">
                   <p className="text-body2 text-error" style={{ fontFeatureSettings: "'case' on" }}>
@@ -137,7 +137,7 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <Button type="submit" className="mt-0.5">
+          <Button type="submit" className="mt-0.5 max-md:-mt-4.75">
             회원가입하기
           </Button>
         </form>
