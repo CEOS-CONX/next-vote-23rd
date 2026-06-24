@@ -34,7 +34,7 @@ export default function Dropdown({ label, placeholder, options, value, onChange 
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="border-foreground flex w-full items-center justify-between border-b px-1.5 py-3"
+          className="border-foreground flex w-full items-center justify-between border-b px-3 py-3 max-md:px-1.5"
           style={{ fontFeatureSettings: "'case' on" }}
         >
           <span className={`text-body1-med ${value ? 'text-foreground' : 'text-placeholder'}`}>
@@ -43,7 +43,7 @@ export default function Dropdown({ label, placeholder, options, value, onChange 
           <IconDropdown className="shrink-0" />
         </button>
         {isOpen && (
-          <ul className="border-border absolute z-10 mt-1 max-h-48 w-full overflow-y-auto border bg-white shadow-lg">
+          <ul className="absolute z-10 max-h-49 w-full overflow-y-auto border border-t-0 border-black bg-white">
             {options.map((option) => (
               <li key={option}>
                 <button
