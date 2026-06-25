@@ -1,16 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
+import { useAuthStore } from '@/stores/auth';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const login = useAuthStore((s) => s.login);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const wasAuthOnMount = useRef(isAuthenticated);
+
+  useEffect(() => {
+    if (wasAuthOnMount.current) {
+      alert('이미 로그인되어 있습니다!');
+      router.replace('/voting');
+    }
+  }, [router]);
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ id?: string; password?: string }>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { id?: string; password?: string } = {};
 
@@ -21,7 +36,18 @@ export default function LoginPage() {
       newErrors.password = '비밀번호가 일치하지 않습니다.';
     }
 
-    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const result = await login(id, password);
+    if (result.success) {
+      const redirect = searchParams.get('redirect') || '/voting';
+      router.push(redirect);
+    } else {
+      setErrors({ id: result.error || '로그인에 실패했습니다.' });
+    }
   };
 
   return (

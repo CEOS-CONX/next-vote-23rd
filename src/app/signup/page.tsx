@@ -1,18 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Input from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import Dropdown from '@/components/ui/Dropdown';
 import { teams, membersByTeam, type TeamName } from '@/mocks/teams';
-
-type Part = 'FRONT-END' | 'BACK-END';
+import { useAuthStore } from '@/stores/auth';
+import { PARTS, type PartKey } from '@/constants/part';
+import { ERROR_CODES } from '@/constants/error';
 
 export default function SignupPage() {
-  const [part, setPart] = useState<Part>('FRONT-END');
+  const router = useRouter();
+  const signup = useAuthStore((s) => s.signup);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const wasAuthOnMount = useRef(isAuthenticated);
+
+  useEffect(() => {
+    if (wasAuthOnMount.current) {
+      alert('이미 로그인되어 있습니다!');
+      router.replace('/voting');
+    }
+  }, [router]);
+
+  const [part, setPart] = useState<PartKey>('FRONTEND');
   const [team, setTeam] = useState('');
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
+  const [userId, setUserId] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
@@ -25,7 +39,7 @@ export default function SignupPage() {
     setName('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
@@ -36,7 +50,21 @@ export default function SignupPage() {
       newErrors.passwordConfirm = '비밀번호가 일치하지 않습니다.';
     }
 
-    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const result = await signup({ part: PARTS[part].value, team, username: name, userId, email, password });
+    if (result.success) {
+      router.push('/login');
+    } else if (result.errCode === ERROR_CODES.DUPLICATE_USER_ID) {
+      setErrors({ userId: result.error || '이미 사용 중인 아이디입니다.' });
+    } else if (result.errCode === ERROR_CODES.DUPLICATE_EMAIL) {
+      setErrors({ email: result.error || '이미 사용 중인 이메일입니다.' });
+    } else {
+      setErrors({ userId: result.error || '회원가입에 실패했습니다.' });
+    }
   };
 
   return (
@@ -49,24 +77,18 @@ export default function SignupPage() {
         <form onSubmit={handleSubmit} className="mt-8.25 flex flex-col gap-7.5">
           {/* Part Toggle */}
           <div className="border-foreground flex h-12.75 overflow-hidden rounded-xl border">
-            <button
-              type="button"
-              onClick={() => setPart('FRONT-END')}
-              className={`text-subhead flex-1 text-center ${
-                part === 'FRONT-END' ? 'bg-btn-dark text-white' : 'text-foreground bg-white'
-              }`}
-            >
-              FRONT - END
-            </button>
-            <button
-              type="button"
-              onClick={() => setPart('BACK-END')}
-              className={`text-subhead flex-1 text-center ${
-                part === 'BACK-END' ? 'bg-btn-dark text-white' : 'text-foreground bg-white'
-              }`}
-            >
-              BACK - END
-            </button>
+            {(Object.keys(PARTS) as PartKey[]).map((key) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setPart(key)}
+                className={`text-subhead flex-1 text-center ${
+                  part === key ? 'bg-btn-dark text-white' : 'text-foreground bg-white'
+                }`}
+              >
+                {PARTS[key].display}
+              </button>
+            ))}
           </div>
 
           {/* Team & Name Dropdowns */}
@@ -92,8 +114,8 @@ export default function SignupPage() {
             <Input
               label="아이디"
               placeholder="아이디를 입력해 주세요"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
             />
             <div className="h-7.5" />
             <Input
