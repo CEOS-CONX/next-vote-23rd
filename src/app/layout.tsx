@@ -25,7 +25,7 @@ export default function RootLayout({
         <AuthProvider>
           <Header />
           <Navigation />
-          <main className="flex-1 px-5">{children}</main>
+          <main className="flex-1">{children}</main>
         </AuthProvider>
       </body>
     </html>

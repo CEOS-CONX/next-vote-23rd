@@ -21,18 +21,18 @@ export default function Navigation() {
   return (
     <div className="fixed inset-0 z-50 mx-auto hidden max-w-97.5 justify-end max-md:flex">
       <div className="absolute inset-0" onClick={close} />
-      <nav className="bg-nav-bg relative flex h-full w-[279px] flex-col">
+      <nav className="bg-nav-bg relative flex h-full w-69.75 flex-col">
         {/* Close Button */}
         <button
           onClick={close}
-          className="absolute top-[33px] right-5 flex h-9 w-9 cursor-pointer items-center justify-center"
+          className="absolute top-8.25 right-5 flex h-9 w-9 cursor-pointer items-center justify-center"
           aria-label="메뉴 닫기"
         >
-          <IconExit className="h-[23px] w-[23px]" />
+          <IconExit className="h-5.75 w-5.75" />
         </button>
 
         {/* Menu Items */}
-        <ul className="mt-[111px] flex flex-col gap-8 pr-5">
+        <ul className="mt-27.75 flex flex-col gap-8 pr-5">
           {menuItems.map((item) => (
             <li key={item.href}>
               <Link
