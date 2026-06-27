@@ -26,7 +26,8 @@ export default function PartLeaderVote({ part }: Props) {
     if (!selectedName) return;
     // TODO: 실제 투표 API 연동
     console.log(`Vote for ${part} leader:`, selectedName);
-    router.push('/voting/result/[pollId]');
+    const pollId = part === 'FE' ? 1 : 2;
+    router.push(`/voting/result/${pollId}`);
   };
 
   return (
