@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { IoChevronForward } from 'react-icons/io5';
 import Leader from '@/assets/shapes/Leader_bf.svg';
 import VoteTitle from '@/assets/shapes/vote_title.svg';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function PartLeaderVote({ part }: Props) {
+  const router = useRouter();
   const [titleHovered, setTitleHovered] = useState(false);
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
@@ -24,6 +26,7 @@ export default function PartLeaderVote({ part }: Props) {
     if (!selectedName) return;
     // TODO: 실제 투표 API 연동
     console.log(`Vote for ${part} leader:`, selectedName);
+    router.push('/voting/result/[pollId]');
   };
 
   return (

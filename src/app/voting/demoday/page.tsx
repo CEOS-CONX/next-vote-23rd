@@ -18,7 +18,7 @@ export default function DemoDayPage() {
     if (!selectedTeam) return;
     // TODO: 실제 투표 API 연동
     console.log('Vote for demoday team:', selectedTeam);
-    router.push('/voting/demoday/result');
+    router.push('/voting/result/[pollId]');
   };
 
   return (
@@ -70,31 +70,27 @@ export default function DemoDayPage() {
                 - top:   컨테이너 '높이' 대비 % (상하 이동, 음수=위)
                 Demo_bf는 컨테이너를 꽉 채우는 기준값. vote_title_demo만 별도 보정 중 */}
             {showVote ? (
-              <VoteTitleDemo
-                className="absolute"
-                style={{
-                  width: '80%',
-                  left: '-0.5%',
-                  top: '-0.42%',
-                }}
-              />
+              <div
+                className="absolute aspect-[333/305]"
+                style={{ width: '44.6%', left: '-0.23%', top: '-0.21%' }}
+              >
+                <VoteTitleDemo className="h-full w-full" />
+              </div>
             ) : (
-              <Demo
-                className="absolute"
-                style={{
-                  width: '100%',
-                  left: '0%',
-                  top: '0%',
-                }}
-              />
+              <div
+                className="absolute aspect-[210/188]"
+                style={{ width: '46.2%', left: '0%', top: '0%' }}
+              >
+                <Demo className="h-full w-full" />
+              </div>
             )}
 
-            <span className="text-subhead text-foreground absolute top-[50%] left-[35%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap max-md:top-[69.95%] max-md:left-[45.24%]">
+            <span className="text-subhead text-foreground absolute top-[32%] left-[21%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap transition-all duration-300 max-md:top-[69.95%] max-md:left-[45.24%]">
               DEMO - DAY
             </span>
 
             {showVote && (
-              <span className="text-subhead text-foreground absolute top-[31.54%] left-[67.60%] inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 whitespace-nowrap max-md:top-[31.54%] max-md:left-[67.60%]">
+              <span className="text-subhead text-foreground absolute top-[15%] left-[32%] inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 whitespace-nowrap max-md:top-[31.54%] max-md:left-[67.60%]">
                 투표하기
                 <IoChevronForward aria-hidden className="text-[1em]" />
               </span>

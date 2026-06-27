@@ -117,6 +117,15 @@ export default function DemoDayResultPage() {
           <ResultCard {...results[2]} />
         </div>
 
+        {/* 재투표 */}
+        <Link
+          href="/voting"
+          className="text-subhead-bold text-foreground absolute top-[83%] left-[68%] inline-flex items-center gap-1 hover:opacity-70"
+        >
+          다시 투표하기
+          <IoChevronForward aria-hidden className="text-[1em]" />
+        </Link>
+
         {/* Main link */}
         <Link
           href="/"
@@ -134,8 +143,15 @@ export default function DemoDayResultPage() {
           <ResultCard key={r.rank} {...r} />
         ))}
         <Link
-          href="/"
+          href="/voting"
           className="text-subhead-bold text-foreground mt-4 inline-flex items-center gap-1 self-end hover:opacity-70"
+        >
+          다시 투표하기
+          <IoChevronForward aria-hidden className="text-[1em]" />
+        </Link>
+        <Link
+          href="/"
+          className="text-subhead-bold text-foreground inline-flex items-center gap-1 self-end hover:opacity-70"
         >
           메인으로 가기
           <IoChevronForward aria-hidden className="text-[1em]" />
