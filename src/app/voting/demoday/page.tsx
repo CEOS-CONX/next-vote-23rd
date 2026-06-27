@@ -18,7 +18,7 @@ export default function DemoDayPage() {
     if (!selectedTeam) return;
     // TODO: 실제 투표 API 연동
     console.log('Vote for demoday team:', selectedTeam);
-    router.push('/voting/demoday/result');
+    router.push('/voting/result/[pollId]');
   };
 
   return (
