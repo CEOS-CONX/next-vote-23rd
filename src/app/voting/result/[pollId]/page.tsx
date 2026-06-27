@@ -157,8 +157,8 @@ export default function ResultPage() {
       {/* Mobile layout — 세로 스택 */}
       <div className="hidden flex-col items-center gap-12 max-md:flex">
         <Image src={Star16} alt="" aria-hidden className="h-auto w-[80px] self-end" sizes="80px" />
-        {results.map((r) => (
-          <ResultCard key={r.rank} {...r} />
+        {top3.map((r, i) => (
+          <ResultCard key={r.candidateId} rank={(i + 1) as 1 | 2 | 3} {...r} />
         ))}
         <Link
           href="/voting"
