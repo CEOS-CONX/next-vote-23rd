@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <>
       {/* Mobile */}
-      <header className="hidden items-start justify-between px-5 pt-8 pb-4 max-md:flex">
+      <header className="hidden items-center justify-between px-5 pt-7.75 pb-7.25 max-md:flex">
         <div className="text-body2 text-foreground" style={{ fontFeatureSettings: "'case' on" }}>
           <p>CEOS</p>
           <p>AWARD</p>
