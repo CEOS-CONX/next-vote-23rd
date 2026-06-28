@@ -28,7 +28,12 @@ export default function VotingMainPage() {
             href={`/voting/demoday`}
             className="group relative block aspect-[210/188] w-full transition-transform duration-300"
           >
-            <Team className="absolute inset-0 h-full w-full" />
+            <div
+              className="absolute aspect-[210/188]"
+              style={{ width: '46.2%', left: '0%', top: '0%' }}
+            >
+              <Team className="h-full w-full" />
+            </div>
             <span className="absolute top-[32%] left-[22%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap transition-colors duration-200 group-hover:bg-gradient-to-r group-hover:from-[#1B7BE8] group-hover:to-[#E5DCB7] group-hover:bg-clip-text group-hover:text-transparent max-md:top-[54%] max-md:left-[32%]">
               DEMO - DAY
             </span>

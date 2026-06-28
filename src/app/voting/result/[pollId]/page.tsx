@@ -1,5 +1,7 @@
 'use client';
-
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { API_ROUTES } from '@/constants/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IoChevronForward } from 'react-icons/io5';
@@ -9,22 +11,23 @@ import no3 from '@/assets/shapes/no3.png';
 import Star from '@/assets/shapes/Star.png';
 import Star16 from '@/assets/shapes/Star16.png';
 
-interface Result {
-  rank: 1 | 2 | 3;
-  team: string;
-  votes: number;
+interface CandidateResult {
+  candidateId: number;
+  name: string;
+  voteCount: number;
 }
-
-// 임시 mock
-const results: Result[] = [
-  { rank: 1, team: 'CONX', votes: 25 },
-  { rank: 2, team: 'Groupeat', votes: 18 },
-  { rank: 3, team: 'Ditda', votes: 12 },
-];
 
 const RANK_IMAGES = { 1: no1, 2: no2, 3: no3 } as const;
 
-function ResultCard({ rank, team, votes }: Result) {
+function ResultCard({
+  rank,
+  name,
+  voteCount,
+}: {
+  rank: 1 | 2 | 3;
+  name: string;
+  voteCount: number;
+}) {
   return (
     <div className="relative inline-block w-[280px] max-md:w-[220px]">
       <Image
@@ -35,13 +38,28 @@ function ResultCard({ rank, team, votes }: Result) {
         priority
       />
       <span className="text-subhead-bold text-foreground absolute top-[60%] left-[58%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
-        {team} | {votes}표
+        {name} | {voteCount}표
       </span>
     </div>
   );
 }
 
-export default function DemoDayResultPage() {
+export default function ResultPage() {
+  const { pollId } = useParams<{ pollId: string }>();
+  const [results, setResults] = useState<CandidateResult[]>([]);
+
+  useEffect(() => {
+    if (!pollId) return;
+    (async () => {
+      const res = await fetch(API_ROUTES.vote.results(Number(pollId)));
+      const data = await res.json();
+      setResults(data.results ?? []);
+    })();
+  }, [pollId]);
+
+  //랭킹 세우기
+  const top3 = [...results].sort((a, b) => b.voteCount - a.voteCount).slice(0, 3);
+
   return (
     <main className="min-h-screen w-full px-0 py-32 max-md:px-5 max-md:py-20">
       {/* Desktop layout — staircase */}
@@ -104,18 +122,27 @@ export default function DemoDayResultPage() {
 
         {/* 1위 */}
         <div className="absolute top-[12%] left-[24%]">
-          <ResultCard {...results[0]} />
+          {top3[0] && <ResultCard rank={1} {...top3[0]} />}
         </div>
 
         {/* 2위 */}
         <div className="absolute top-[40%] left-[52%]">
-          <ResultCard {...results[1]} />
+          {top3[1] && <ResultCard rank={2} {...top3[1]} />}
         </div>
 
         {/* 3위 */}
         <div className="absolute top-[68%] left-[22%]">
-          <ResultCard {...results[2]} />
+          {top3[2] && <ResultCard rank={3} {...top3[2]} />}
         </div>
+
+        {/* 재투표 */}
+        <Link
+          href="/voting"
+          className="text-subhead-bold text-foreground absolute top-[83%] left-[68%] inline-flex items-center gap-1 hover:opacity-70"
+        >
+          다시 투표하기
+          <IoChevronForward aria-hidden className="text-[1em]" />
+        </Link>
 
         {/* Main link */}
         <Link
@@ -130,12 +157,19 @@ export default function DemoDayResultPage() {
       {/* Mobile layout — 세로 스택 */}
       <div className="hidden flex-col items-center gap-12 max-md:flex">
         <Image src={Star16} alt="" aria-hidden className="h-auto w-[80px] self-end" sizes="80px" />
-        {results.map((r) => (
-          <ResultCard key={r.rank} {...r} />
+        {top3.map((r, i) => (
+          <ResultCard key={r.candidateId} rank={(i + 1) as 1 | 2 | 3} {...r} />
         ))}
         <Link
-          href="/"
+          href="/voting"
           className="text-subhead-bold text-foreground mt-4 inline-flex items-center gap-1 self-end hover:opacity-70"
+        >
+          다시 투표하기
+          <IoChevronForward aria-hidden className="text-[1em]" />
+        </Link>
+        <Link
+          href="/"
+          className="text-subhead-bold text-foreground inline-flex items-center gap-1 self-end hover:opacity-70"
         >
           메인으로 가기
           <IoChevronForward aria-hidden className="text-[1em]" />

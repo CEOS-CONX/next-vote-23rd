@@ -1,29 +1,75 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { IoChevronForward } from 'react-icons/io5';
 import Leader from '@/assets/shapes/Leader_bf.svg';
 import VoteTitle from '@/assets/shapes/vote_title.svg';
-import { teamMembers, teams, type Part } from '@/mocks/teams';
+import { API_ROUTES } from '@/constants/api';
 
 interface Props {
-  part: Extract<Part, 'FE' | 'BE'>;
+  part: 'FE' | 'BE';
+}
+
+interface Candidate {
+  candidateId: number;
+  name: string;
+  voteCount: number;
 }
 
 export default function PartLeaderVote({ part }: Props) {
+  const router = useRouter();
   const [titleHovered, setTitleHovered] = useState(false);
-  const [selectedName, setSelectedName] = useState<string | null>(null);
 
-  const names = teams
-    .flatMap((team) => teamMembers[team][part])
-    .sort((a, b) => a.localeCompare(b, 'ko'));
+  const POLL_ID = part === 'FE' ? 1 : 2;
 
-  const showVote = titleHovered || selectedName !== null;
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [hasVoted, setHasVoted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = () => {
-    if (!selectedName) return;
-    // TODO: 실제 투표 API 연동
-    console.log(`Vote for ${part} leader:`, selectedName);
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(API_ROUTES.vote.results(POLL_ID));
+      const data = await res.json();
+      setCandidates(data.results ?? []);
+    })();
+
+    (async () => {
+      const res = await fetch(API_ROUTES.vote.myVote(POLL_ID));
+      if (!res.ok) return;
+      const data = await res.json();
+      setHasVoted(data.hasVoted);
+      if (data.candidateId) setSelectedId(data.candidateId);
+    })();
+    // part(=POLL_ID)이 바뀌면 다시 불러옴. FE/BE 페이지가 같은 컴포넌트를 쓰기 때문
+  }, [POLL_ID]);
+
+  // 이름 가나다순으로 정렬
+  const sortedCandidates = [...candidates].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+
+  const showVote = titleHovered || selectedId !== null;
+
+  // 투표
+  const handleSubmit = async () => {
+    if (!selectedId || submitting) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch(API_ROUTES.vote.votes(POLL_ID), {
+        method: hasVoted ? 'PATCH' : 'POST', // 처음이면 POST, 이미 했으면 PATCH(재투표)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ candidateId: selectedId }),
+      });
+
+      if (res.ok) {
+        router.push(`/voting/result/${POLL_ID}`);
+      } else {
+        const err = await res.json();
+        alert(err.message ?? '투표에 실패했습니다.');
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -36,7 +82,7 @@ export default function PartLeaderVote({ part }: Props) {
             onMouseEnter={() => setTitleHovered(true)}
             onMouseLeave={() => setTitleHovered(false)}
             onClick={handleSubmit}
-            disabled={!selectedName}
+            disabled={!selectedId} // 고른 후보 없으면 비활성화
             className="group relative block aspect-[280/141] w-full transition-transform duration-300 disabled:cursor-default"
           >
             {showVote ? (
@@ -58,15 +104,16 @@ export default function PartLeaderVote({ part }: Props) {
           </button>
         </div>
 
-        {/* Names */}
         <ul className="grid grid-cols-2 gap-x-16 gap-y-8 max-md:gap-x-10 max-md:gap-y-6">
-          {names.map((name) => {
-            const isSelected = selectedName === name;
+          {sortedCandidates.map((c) => {
+            const isSelected = selectedId === c.candidateId; // 이름 대신 id로 비교
             return (
-              <li key={name} className="flex justify-center">
+              <li key={c.candidateId} className="flex justify-center">
                 <button
                   type="button"
-                  onClick={() => setSelectedName((cur) => (cur === name ? null : name))}
+                  onClick={() =>
+                    setSelectedId((cur) => (cur === c.candidateId ? null : c.candidateId))
+                  }
                   className="group relative inline-flex h-[55px] w-[55px] items-center justify-center"
                 >
                   <span
@@ -76,7 +123,7 @@ export default function PartLeaderVote({ part }: Props) {
                     }`}
                   />
                   <span className="text-subhead-bold text-foreground relative z-10 whitespace-nowrap">
-                    {name}
+                    {c.name}
                   </span>
                 </button>
               </li>
