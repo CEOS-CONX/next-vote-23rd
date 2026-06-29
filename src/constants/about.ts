@@ -5,8 +5,12 @@ export interface AboutMember {
 }
 
 export const ABOUT_MEMBERS: AboutMember[] = [
-  { nameEn: 'KIM HONGYEOP', part: 'FE', contributions: ['Setting', 'Auth', 'Members', 'About Us', 'Deploy'] },
+  {
+    nameEn: 'KIM HONGYEOP',
+    part: 'FE',
+    contributions: ['Setting', 'Auth', 'Members', 'About Us', 'Deploy'],
+  },
   { nameEn: 'OH YUJIN', part: 'FE', contributions: ['Voting', 'Common', 'Members'] },
-  { nameEn: 'KIM DOHYUN', part: 'BE', contributions: ['User', 'Auth'] },
-  { nameEn: 'KIM TAEHEE', part: 'BE', contributions: ['Deploy', 'Setting', 'Voting'] },
+  { nameEn: 'KIM DOHYUN', part: 'BE', contributions: ['Members', 'Auth', 'Infra'] },
+  { nameEn: 'KIM TAEHEE', part: 'BE', contributions: ['Voting', 'Swagger'] },
 ];
